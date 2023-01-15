@@ -60,12 +60,16 @@ class _UserhomeState extends State<Userhome> {
                       onTap: () {},
                       title: Row(
                         children: [
-                          Icon(Icons.person),
+                          Icon(
+                            Icons.person,
+                            color: Colors.grey[300],
+                          ),
                           SizedBox(
                             width: 10,
                           ),
                           Text(
                             firebaseAuth.currentUser!.email.toString(),
+                            style: TextStyle(color: Colors.white),
                           ),
                         ],
                       ),

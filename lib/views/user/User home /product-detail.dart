@@ -212,74 +212,66 @@ class _ProductPageState extends State<ProductPage> {
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 50),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          cart.checkproduct(widget.primg).then((value) {
-                            if (value) {
-                              print("product already exist");
-                              Fluttertoast.showToast(
-                                  msg: "Product already exist",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: PrimaryColor,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0);
-                            } else {
-                              setState(() {
-                                cart.quantity.length;
-                              });
-                              print("product is added to the list");
-                              cart.product_price.add(widget.price);
-                              cart.Product_name.add(widget.prname);
-                              cart.product_image.add(widget.primg);
+              Padding(
+                padding: const EdgeInsets.only(top: 200, left: 10, right: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        cart.checkproduct(widget.primg).then((value) {
+                          if (value) {
+                            print("product already exist");
+                            Fluttertoast.showToast(
+                                msg: "Product already exist",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 2,
+                                backgroundColor: PrimaryColor,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          } else {
+                            setState(() {
+                              cart.quantity.length;
+                            });
+                            print("product is added to the list");
+                            cart.product_price.add(widget.price);
+                            cart.Product_name.add(widget.prname);
+                            cart.product_image.add(widget.primg);
 
-                              cart.quantity.add(quantity);
-                              Fluttertoast.showToast(
-                                  msg: "Product Add",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: PrimaryColor,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0);
-                            }
-                          });
-                        },
-                        child: Container(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: PrimaryColor),
-                          child: const Center(
-                            child: Text(
-                              "Add to cart",
-                              style: TextStyle(
-                                fontFamily: "new",
-                                color: Colors.white,
-                              ),
+                            cart.quantity.add(quantity);
+                            Fluttertoast.showToast(
+                                msg: "Product Add",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 2,
+                                backgroundColor: PrimaryColor,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          }
+                        });
+                      },
+                      child: Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: PrimaryColor),
+                        child: const Center(
+                          child: Text(
+                            "Add to cart",
+                            style: TextStyle(
+                              fontFamily: "new",
+                              color: Colors.white,
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
             ],
           ),
         ),

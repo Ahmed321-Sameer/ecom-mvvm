@@ -272,22 +272,14 @@ class Shoes extends StatelessWidget {
                                     primg: curdoc["imagelink"],
                                     prname: curdoc["name"],
                                     price: curdoc["price"],
-                                    // promo: curdoc["promo code"],
-                                    // business_name: curdoc["business_name"],
                                     fvrt: favrt,
                                     uid: curdoc.id,
-                                    // selleruid: curdoc["seller_id"],
-                                    // seller_number: curdoc["seller_number"],
-                                    // prquantity: curdoc["quantity"],
-                                    // prname: curdoc["item name"],
-                                    // price: curdoc["price"],
-                                    // description: curdoc["item description"],
                                   )));
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        height: 190,
+                        height: 180,
                         width: 150,
                         decoration: const BoxDecoration(
                             color: Colors.white,

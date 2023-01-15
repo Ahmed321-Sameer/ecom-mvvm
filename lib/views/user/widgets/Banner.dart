@@ -5,8 +5,8 @@ class Baanner extends StatelessWidget {
   Baanner({Key? key}) : super(key: key);
   int _current = 0;
   List carouselData = [
-    "assets/header_img1.png",
-    "assets/header_img1.png",
+    "assets/pic1.webp",
+    "assets/coverPhoto.JPG",
     "assets/header_img1.png",
   ];
   List<T> map<T>(List list, Function handler) {
@@ -30,7 +30,7 @@ class Baanner extends StatelessWidget {
               options: CarouselOptions(
                 viewportFraction: 0.9,
                 autoPlay: true,
-                aspectRatio: 1.7,
+                aspectRatio: 1.0,
                 enlargeCenterPage: true,
                 enlargeStrategy: CenterPageEnlargeStrategy.height,
                 enableInfiniteScroll: false,

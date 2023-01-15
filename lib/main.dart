@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_project/views/user/Customer%20account/User-register.dart';
 import 'package:mvvm_project/views/user/Customer%20account/Userlogin.dart';
+import 'package:mvvm_project/views/user/User%20home%20/bottomnavigation.dart';
 import 'package:mvvm_project/views/user/User%20home%20/user-home.dart';
 
 void main() async {
@@ -23,8 +24,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:
-          FirebaseAuth.instance.currentUser != null ? Userhome() : Userlogin(),
+      home: FirebaseAuth.instance.currentUser != null
+          ? Bottomsheet()
+          : Userlogin(),
     );
   }
 }
