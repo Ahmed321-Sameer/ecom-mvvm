@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mvvm_project/views/user/User%20home%20/utils/constants.dart';
 import 'package:mvvm_project/views/user/widgets/cart.dart';
 
 import 'bottomnavigation.dart';
@@ -60,7 +61,7 @@ class _viewcartState extends State<viewcart> {
           icon: Icon(Icons.arrow_back),
           color: Colors.white,
         ),
-        backgroundColor: Colors.blue[900],
+        backgroundColor: PrimaryColor,
         title: const Text(
           'Cart',
           style: TextStyle(
@@ -72,11 +73,18 @@ class _viewcartState extends State<viewcart> {
         height: MediaQuery.of(context).size.height * 0.16,
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         decoration: BoxDecoration(
-          color: Colors.blue[900]!,
+          color: Colors.grey[100],
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(15),
           ),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 20,
+              color: Colors.grey[300]!,
+              offset: Offset(0, 0),
+            )
+          ],
         ),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -89,7 +97,7 @@ class _viewcartState extends State<viewcart> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white.withOpacity(.9),
+                    color: Colors.black,
                   ),
                 ),
                 Row(
@@ -99,7 +107,7 @@ class _viewcartState extends State<viewcart> {
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ],
@@ -110,8 +118,7 @@ class _viewcartState extends State<viewcart> {
           Container(
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             decoration: BoxDecoration(
-                color: Colors.orange[300],
-                borderRadius: BorderRadius.circular(30)),
+                color: PrimaryColor, borderRadius: BorderRadius.circular(30)),
             child: GestureDetector(
               onTap: () {
                 getuserifno();
@@ -157,7 +164,7 @@ class _viewcartState extends State<viewcart> {
                                     Hero(
                                       tag: index,
                                       child: CircleAvatar(
-                                        maxRadius: 40,
+                                        maxRadius: 50,
                                         backgroundColor: Colors.white,
                                         child: Image(
                                           image: NetworkImage(
@@ -170,21 +177,28 @@ class _viewcartState extends State<viewcart> {
                                       width: 20,
                                     ),
                                     Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "price: " + cart.Product_name[index],
+                                          cart.Product_name[index],
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15),
                                         ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
                                         Text(
                                             (cart.quantity[index] *
-                                                    int.parse(cart
-                                                        .product_price[index]))
+                                                    int.parse(
+                                                      cart.product_price[index],
+                                                    ))
                                                 .toString(),
                                             style: const TextStyle(
+                                                color: PrimaryColor,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15)),
                                         // Text(
@@ -253,7 +267,10 @@ class _viewcartState extends State<viewcart> {
                 : const Center(
                     child: Text(
                       "Cart is empty",
-                      style: TextStyle(fontSize: 40, color: Colors.red),
+                      style: TextStyle(
+                        fontSize: 40,
+                        color: PrimaryColor,
+                      ),
                     ),
                   )),
       ),
@@ -401,8 +418,17 @@ class _viewcartState extends State<viewcart> {
             });
             ;
           } else {
-            print("list is empty");
+            print("Complete your form first");
           }
+        } else {
+          Fluttertoast.showToast(
+              msg: "Order placed",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 2,
+              backgroundColor: Colors.blue,
+              textColor: Colors.white,
+              fontSize: 16.0);
         }
       },
     ).show();

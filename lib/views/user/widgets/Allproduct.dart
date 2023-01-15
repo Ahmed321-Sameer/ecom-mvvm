@@ -12,94 +12,454 @@ class AllProduct extends StatelessWidget {
   // final studentViewModel = Get.put(StudentViewModel());
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('Products').snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (!snapshot.hasData)
-            return Center(child: CircularProgressIndicator());
+    return Container(
+      height: 300,
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('Products')
+              .where("product_type", isEqualTo: "Shirts")
+              .snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (!snapshot.hasData)
+              return Center(child: CircularProgressIndicator());
 
-          return Container(
-            margin: const EdgeInsets.all(12),
-            child: MasonryGridView.count(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: 2,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              itemCount: snapshot.data.docs.length,
-              itemBuilder: (context, index) {
-                DocumentSnapshot curdoc = snapshot.data!.docs[index];
-                return GestureDetector(
-                  onTap: () {
-                    print("object");
-                    List favrt = [];
-                    favrt = curdoc.get("faavorite");
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ProductPage(
-                                  index: index,
-                                  primg: curdoc["imagelink"],
-                                  prname: curdoc["name"],
-                                  price: curdoc["price"],
-                                  // promo: curdoc["promo code"],
-                                  // business_name: curdoc["business_name"],
-                                  fvrt: favrt,
-                                  uid: curdoc.id,
-                                  // selleruid: curdoc["seller_id"],
-                                  // seller_number: curdoc["seller_number"],
-                                  // prquantity: curdoc["quantity"],
-                                  // prname: curdoc["item name"],
-                                  // price: curdoc["price"],
-                                  // description: curdoc["item description"],
-                                )));
-                  },
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(12))),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              topRight: Radius.circular(12)),
-                          child: Hero(
-                            tag: index,
-                            child: Image(
-                              image: NetworkImage(curdoc["imagelink"]),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(curdoc["name"]),
-                              SizedBox(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.01),
-                              Text(
-                                curdoc["description"],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
+            return Container(
+              margin: const EdgeInsets.all(12),
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot curdoc = snapshot.data!.docs[index];
+                  return GestureDetector(
+                    onTap: () {
+                      print("object");
+                      List favrt = [];
+                      favrt = curdoc.get("faavorite");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductPage(
+                                    index: index,
+                                    primg: curdoc["imagelink"],
+                                    prname: curdoc["name"],
+                                    price: curdoc["price"],
+                                    // promo: curdoc["promo code"],
+                                    // business_name: curdoc["business_name"],
+                                    fvrt: favrt,
+                                    uid: curdoc.id,
+                                    // selleruid: curdoc["seller_id"],
+                                    // seller_number: curdoc["seller_number"],
+                                    // prquantity: curdoc["quantity"],
+                                    // prname: curdoc["item name"],
+                                    // price: curdoc["price"],
+                                    // description: curdoc["item description"],
+                                  )));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 190,
+                        width: 150,
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              color: Colors.grey[300],
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12),
+                                  bottomLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
                                 ),
-                              )
-                            ],
-                          ),
+                                child: Hero(
+                                  tag: index,
+                                  child: Image(
+                                    image: NetworkImage(curdoc["imagelink"]),
+                                    fit: BoxFit.fill,
+                                    height: 150,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(curdoc["name"]),
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.01),
+                                  Text(
+                                    curdoc["description"],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
-          );
-        });
+                  );
+                },
+              ),
+            );
+          }),
+    );
+  }
+}
+
+class Jackets extends StatelessWidget {
+  Jackets({Key? key}) : super(key: key);
+  // final studentViewModel = Get.put(StudentViewModel());
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 300,
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('Products')
+              .where("product_type", isEqualTo: "Jackets")
+              .snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (!snapshot.hasData)
+              return Center(child: CircularProgressIndicator());
+
+            return Container(
+              margin: const EdgeInsets.all(12),
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot curdoc = snapshot.data!.docs[index];
+                  return GestureDetector(
+                    onTap: () {
+                      print("object");
+                      List favrt = [];
+                      favrt = curdoc.get("faavorite");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductPage(
+                                    index: index,
+                                    primg: curdoc["imagelink"],
+                                    prname: curdoc["name"],
+                                    price: curdoc["price"],
+                                    // promo: curdoc["promo code"],
+                                    // business_name: curdoc["business_name"],
+                                    fvrt: favrt,
+                                    uid: curdoc.id,
+                                    // selleruid: curdoc["seller_id"],
+                                    // seller_number: curdoc["seller_number"],
+                                    // prquantity: curdoc["quantity"],
+                                    // prname: curdoc["item name"],
+                                    // price: curdoc["price"],
+                                    // description: curdoc["item description"],
+                                  )));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 190,
+                        width: 150,
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              color: Colors.grey[300],
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12),
+                                  bottomLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                ),
+                                child: Hero(
+                                  tag: index,
+                                  child: Image(
+                                    image: NetworkImage(curdoc["imagelink"]),
+                                    fit: BoxFit.fill,
+                                    height: 150,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(curdoc["name"]),
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.01),
+                                  Text(
+                                    curdoc["description"],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          }),
+    );
+  }
+}
+
+class Shoes extends StatelessWidget {
+  Shoes({Key? key}) : super(key: key);
+  // final studentViewModel = Get.put(StudentViewModel());
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 300,
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('Products')
+              .where("product_type", isEqualTo: "Shoes")
+              .snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (!snapshot.hasData)
+              return Center(child: CircularProgressIndicator());
+
+            return Container(
+              margin: const EdgeInsets.all(12),
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot curdoc = snapshot.data!.docs[index];
+                  return GestureDetector(
+                    onTap: () {
+                      print("object");
+                      List favrt = [];
+                      favrt = curdoc.get("faavorite");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductPage(
+                                    index: index,
+                                    primg: curdoc["imagelink"],
+                                    prname: curdoc["name"],
+                                    price: curdoc["price"],
+                                    // promo: curdoc["promo code"],
+                                    // business_name: curdoc["business_name"],
+                                    fvrt: favrt,
+                                    uid: curdoc.id,
+                                    // selleruid: curdoc["seller_id"],
+                                    // seller_number: curdoc["seller_number"],
+                                    // prquantity: curdoc["quantity"],
+                                    // prname: curdoc["item name"],
+                                    // price: curdoc["price"],
+                                    // description: curdoc["item description"],
+                                  )));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 190,
+                        width: 150,
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              color: Colors.grey[300],
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12),
+                                  bottomLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                ),
+                                child: Hero(
+                                  tag: index,
+                                  child: Image(
+                                    image: NetworkImage(curdoc["imagelink"]),
+                                    fit: BoxFit.fill,
+                                    height: 150,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(curdoc["name"]),
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.01),
+                                  Text(
+                                    curdoc["description"],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          }),
+    );
+  }
+}
+
+class Pants extends StatelessWidget {
+  Pants({Key? key}) : super(key: key);
+  // final studentViewModel = Get.put(StudentViewModel());
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 300,
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('Products')
+              .where("product_type", isEqualTo: "Pants")
+              .snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (!snapshot.hasData)
+              return Center(child: CircularProgressIndicator());
+
+            return Container(
+              margin: const EdgeInsets.all(12),
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot curdoc = snapshot.data!.docs[index];
+                  return GestureDetector(
+                    onTap: () {
+                      print("object");
+                      List favrt = [];
+                      favrt = curdoc.get("faavorite");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductPage(
+                                    index: index,
+                                    primg: curdoc["imagelink"],
+                                    prname: curdoc["name"],
+                                    price: curdoc["price"],
+                                    // promo: curdoc["promo code"],
+                                    // business_name: curdoc["business_name"],
+                                    fvrt: favrt,
+                                    uid: curdoc.id,
+                                    // selleruid: curdoc["seller_id"],
+                                    // seller_number: curdoc["seller_number"],
+                                    // prquantity: curdoc["quantity"],
+                                    // prname: curdoc["item name"],
+                                    // price: curdoc["price"],
+                                    // description: curdoc["item description"],
+                                  )));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 190,
+                        width: 150,
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              color: Colors.grey[200],
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12),
+                                  bottomLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                ),
+                                child: Hero(
+                                  tag: index,
+                                  child: Image(
+                                    image: NetworkImage(curdoc["imagelink"]),
+                                    fit: BoxFit.fill,
+                                    height: 150,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(curdoc["name"]),
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.01),
+                                  Text(
+                                    curdoc["description"],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          }),
+    );
   }
 }
 

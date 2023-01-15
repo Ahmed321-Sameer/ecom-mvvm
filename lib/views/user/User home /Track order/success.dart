@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/constants.dart';
+
 class Successgorders extends StatelessWidget {
   const Successgorders({Key? key}) : super(key: key);
 
@@ -43,10 +45,10 @@ class Successgorders extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(colors: [
-                        Colors.grey[800]!,
-                        Colors.grey[600]!,
-                        Colors.grey[400]!,
-                        Colors.grey[200]!,
+                        PrimaryColor,
+                        PrimaryColor.withOpacity(.7),
+                        PrimaryColor.withOpacity(.8),
+                        PrimaryColor.withOpacity(.9),
                       ]),
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(20),

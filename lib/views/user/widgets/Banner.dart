@@ -28,15 +28,28 @@ class Baanner extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: CarouselSlider(
               options: CarouselOptions(
-                enlargeCenterPage: true,
-                enableInfiniteScroll: false,
+                viewportFraction: 0.9,
                 autoPlay: true,
+                aspectRatio: 1.7,
+                enlargeCenterPage: true,
+                enlargeStrategy: CenterPageEnlargeStrategy.height,
+                enableInfiniteScroll: false,
               ),
               items: carouselData
                   .map(
-                    (value) => Image(
-                      image: AssetImage(value),
-                      fit: BoxFit.cover,
+                    (value) => Container(
+                      margin: EdgeInsets.all(7.5),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                        child: Image(
+                          image: AssetImage(
+                            value,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   )
                   .toList(),
@@ -46,22 +59,22 @@ class Baanner extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: map<Widget>(carouselData, (value, url) {
-            return Container(
-              width: _current == value ? 35.0 : 10,
-              height: _current == value ? 10.0 : 10,
-              margin: const EdgeInsets.symmetric(horizontal: 5),
-              decoration: BoxDecoration(
-                borderRadius: _current == value
-                    ? BorderRadius.circular(20)
-                    : BorderRadius.circular(20),
-                color: _current == value ? Colors.blue : Colors.grey[400],
-              ),
-            );
-          }),
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: map<Widget>(carouselData, (value, url) {
+        //     return Container(
+        //       width: _current == value ? 35.0 : 10,
+        //       height: _current == value ? 10.0 : 10,
+        //       margin: const EdgeInsets.symmetric(horizontal: 5),
+        //       decoration: BoxDecoration(
+        //         borderRadius: _current == value
+        //             ? BorderRadius.circular(20)
+        //             : BorderRadius.circular(20),
+        //         color: _current == value ? Colors.blue : Colors.grey[400],
+        //       ),
+        //     );
+        //   }),
+        // ),
       ],
     );
   }

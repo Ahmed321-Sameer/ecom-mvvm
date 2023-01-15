@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_project/views/user/User%20home%20/user-home.dart';
+import 'package:mvvm_project/views/user/User%20home%20/utils/constants.dart';
 
 import 'Track order/Track_order.dart';
 import 'Track order/tabbar.dart';
@@ -36,8 +37,8 @@ class _BottomsheetState extends State<Bottomsheet> {
 
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            selectedItemColor: Colors.grey,
-            unselectedItemColor: Colors.grey[300],
+            selectedItemColor: PrimaryColor,
+            unselectedItemColor: PrimaryColor.withOpacity(0.2),
             selectedFontSize: 18,
             unselectedFontSize: 15,
             showSelectedLabels: true,

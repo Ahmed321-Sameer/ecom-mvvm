@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mvvm_project/views/user/User%20home%20/utils/constants.dart';
 import 'package:mvvm_project/views/user/User%20home%20/viewcart.dart';
 import 'package:mvvm_project/views/user/widgets/cart.dart';
 // import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -58,7 +60,7 @@ class _ProductPageState extends State<ProductPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.blue[900],
+        backgroundColor: PrimaryColor,
         leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
@@ -95,7 +97,7 @@ class _ProductPageState extends State<ProductPage> {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                       decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.blue),
+                          shape: BoxShape.circle, color: PrimaryColor),
                       child: Center(
                           child: Text(
                         cart.quantity.length.toString(),
@@ -118,7 +120,7 @@ class _ProductPageState extends State<ProductPage> {
             children: [
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.4,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 color: Colors.white,
@@ -127,12 +129,21 @@ class _ProductPageState extends State<ProductPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Center(
-                      child: Hero(
-                        tag: widget.index,
-                        child: Image(
-                            image: NetworkImage(widget.primg),
-                            height: 240,
-                            fit: BoxFit.cover),
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12),
+                        ),
+                        child: Hero(
+                          tag: widget.index,
+                          child: Image(
+                              image: NetworkImage(widget.primg),
+                              height: 250,
+                              // width: 350,
+                              fit: BoxFit.cover),
+                        ),
                       ),
                     ),
                     Row(
@@ -189,7 +200,7 @@ class _ProductPageState extends State<ProductPage> {
                           TextSpan(
                             text: "Rs${widget.price}",
                             style: const TextStyle(
-                              color: Colors.black,
+                              color: PrimaryColor,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -216,6 +227,14 @@ class _ProductPageState extends State<ProductPage> {
                           cart.checkproduct(widget.primg).then((value) {
                             if (value) {
                               print("product already exist");
+                              Fluttertoast.showToast(
+                                  msg: "Product already exist",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 2,
+                                  backgroundColor: PrimaryColor,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
                             } else {
                               setState(() {
                                 cart.quantity.length;
@@ -226,6 +245,14 @@ class _ProductPageState extends State<ProductPage> {
                               cart.product_image.add(widget.primg);
 
                               cart.quantity.add(quantity);
+                              Fluttertoast.showToast(
+                                  msg: "Product Add",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 2,
+                                  backgroundColor: PrimaryColor,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
                             }
                           });
                         },
@@ -234,7 +261,7 @@ class _ProductPageState extends State<ProductPage> {
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Colors.blue[900]),
+                              color: PrimaryColor),
                           child: const Center(
                             child: Text(
                               "Add to cart",

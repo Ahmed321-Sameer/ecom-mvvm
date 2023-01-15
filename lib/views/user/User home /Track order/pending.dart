@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mvvm_project/views/user/User%20home%20/utils/constants.dart';
 
 class Pendingorders extends StatefulWidget {
   const Pendingorders({Key? key}) : super(key: key);
@@ -53,10 +54,10 @@ class _PendingordersState extends State<Pendingorders> {
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(colors: [
-                      Colors.grey[800]!,
-                      Colors.grey[600]!,
-                      Colors.grey[400]!,
-                      Colors.grey[200]!,
+                      PrimaryColor,
+                      PrimaryColor.withOpacity(.7),
+                      PrimaryColor.withOpacity(.8),
+                      PrimaryColor.withOpacity(.9),
                     ]),
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(20),
